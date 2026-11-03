@@ -26,6 +26,7 @@ SHIFT_DIR = os.path.join(PROJECT_ROOT, "data", "_shift")
 METHOD_ENTRYPOINTS = {
     "source_only": "main/main_ot.py",
     "ot_balanced": "main/main_ot.py",
+    "ot_auto": "main/main_ot.py",
     "ot_unbalanced": "main/main_ot.py",
     "mmd": "main/main_mmd.py",
     "invgan_kd": "main/main_invgan_kd.py",
@@ -163,11 +164,13 @@ def _planned_run_dir(args, target_file, level, replica, seed, method):
         lr=effective_lr,
         # 与 run_experiments._namespace 同规则：非 main_ot.py 系方法身份里置 False
         ot_normalize=bool(args.ot_normalize)
-        and method in ("source_only", "ot_balanced", "ot_unbalanced"),
+        and method in ("source_only", "ot_balanced", "ot_unbalanced", "ot_auto"),
         eval_protocol=args.eval_protocol,
         run_tag=f"prior{level:g}_rep{replica}",
         max_seq_length=args.max_seq_length,
         num_epochs=args.num_epochs,
+        ot_max_iter=args.ot_max_iter,
+        ot_tol=args.ot_tol,
         analysis_size=args.analysis_size,
         analysis_seed=args.analysis_seed,
         deterministic=args.deterministic,
@@ -222,6 +225,8 @@ def main():
     parser.add_argument("--analysis-seed", type=int, default=None)
     parser.add_argument("--target-sample-size", type=int, default=None)
     parser.add_argument("--deterministic", action="store_true")
+    parser.add_argument("--selection", choices=["validation", "last_epoch"], default="validation")
+    parser.add_argument("--reuse-target-files", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--results-root", default="results")
     parser.add_argument("--out", default="results/experiment_B/prior_shift.csv")
@@ -266,9 +271,11 @@ def main():
         target_file = os.path.join(
             SHIFT_DIR, f"{args.tgt}_prior{level:g}_rep{replica}.csv"
         )
+        if args.reuse_target_files and not os.path.isfile(target_file):
+            raise FileNotFoundError(target_file)
         resampled = resample_target(
             args.tgt, level, replica, target_file, target_sample_size,
-            write_file=not args.dry_run,
+            write_file=not args.dry_run and not args.reuse_target_files,
         )
         tag = f"prior{level:g}_rep{replica}"
         effective_lambda, effective_lr = _method_hyper(method, args)
@@ -284,6 +291,7 @@ def main():
             "--seed", str(replica),
             "--max_seq_length", str(args.max_seq_length),
             "--num_epochs", str(args.num_epochs),
+            "--selection", args.selection,
             "--batch_size", str(args.batch_size),
             "--lambda", str(effective_lambda),
             "--tau", str(args.tau),
@@ -364,6 +372,8 @@ def main():
             writer.writerows(rows)
 
     print(f"wrote Experiment B run manifest: {args.out}")
+    if any(row["status"] == "failed" for row in rows):
+        raise SystemExit("One or more runs failed; inspect the worker log and rerun.")
 
 
 if __name__ == "__main__":
