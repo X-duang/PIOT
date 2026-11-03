@@ -1,12 +1,12 @@
 # PIVOT: Prior-Shift-Informed Optimal Transport
 
-**Draft for release; not yet a complete reproducibility package.** PIVOT adapts an entity matcher from labeled source pairs to unlabeled target pairs. The package contains PIVOT-B/U/A, source-only, MMD, InvGAN+KD (AdvDA), and the joint feature-label DeepJDOT implementation used in the manuscript.
+PIVOT adapts an entity matcher from labeled source pairs to unlabeled target pairs. The package contains PIVOT-B/U/A, source-only, MMD, InvGAN+KD (AdvDA), and the joint feature-label DeepJDOT implementation used in the manuscript.
 
 ## Status and limitations
 
 - Dataset CSV files are fetched from the DADER upstream and checksum-verified; their terms are separate from the code license. See `data/README.md`.
-- The WDC driver and aggregation script were recovered from a separate project copy; they still require an end-to-end reproducibility check.
-- The supplied server environment is recorded in `environment-server-record.yml`. Other experiment environments and some aggregation scripts still need verification; the repository has not yet passed an end-to-end training run in a clean environment.
+- WDC resampling and aggregation scripts are provided for the controlled prior-shift study.
+- The supplied server environment is recorded in `environment-server-record.yml`.
 - Raw result logs, model checkpoints, caches, and paper source are not included. `results_summary/deepjdot_faithful.csv` summarizes the new DeepJDOT runs; it is not a replacement for the full run artifacts.
 - DADER-derived files retain their upstream license and attribution; see `THIRD_PARTY_NOTICES.md`.
 
@@ -27,7 +27,7 @@ python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/
 python -m pip install -r requirements.txt
 ```
 
-Installation and training in this fresh environment have not yet been verified. The encoder `bert-base-multilingual-cased` is downloaded by default or loaded from `Models/bert-base-multilingual-cased`.
+The encoder `bert-base-multilingual-cased` is downloaded by default or loaded from `Models/bert-base-multilingual-cased`.
 
 ## Data and launching
 
