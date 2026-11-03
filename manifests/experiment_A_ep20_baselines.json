@@ -1,0 +1,286 @@
+{
+  "experiment": "experiment_A",
+  "protocol": "final_paper",
+  "defaults": {
+    "eval_protocol": "inductive",
+    "batch_size": 32,
+    "num_epochs": 20,
+    "ot_normalize": true,
+    "ot_reg": 0.1,
+    "ot_max_iter": 300,
+    "ot_tol": 1e-07,
+    "alignment_weight": 0.01,
+    "tau": 1.0,
+    "cost": "l2",
+    "cost_mode": "class_blind",
+    "learning_rate": null,
+    "run_tag": "ep20_baselines_last_epoch",
+    "analysis_size": 128,
+    "analysis_seed": 42,
+    "deterministic": false,
+    "selection": "last_epoch"
+  },
+  "seeds": [
+    3000,
+    1000,
+    42,
+    10,
+    0
+  ],
+  "tier_seed_policy": {
+    "tier_1": [
+      3000,
+      1000,
+      42,
+      10,
+      0
+    ],
+    "tier_2": [
+      3000,
+      1000,
+      42,
+      10,
+      0
+    ]
+  },
+  "tier_method_policy": {
+    "tier_1": [
+      "source_only",
+      "mmd",
+      "invgan_kd",
+      "ot_balanced",
+      "ot_unbalanced",
+      "target_only_oracle"
+    ],
+    "tier_2": [
+      "source_only",
+      "mmd",
+      "invgan_kd",
+      "ot_balanced",
+      "ot_unbalanced",
+      "target_only_oracle"
+    ]
+  },
+  "tasks": [
+    {
+      "task": "T1",
+      "src": "wa1",
+      "tgt": "ab",
+      "tier": "tier_1",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T2",
+      "src": "ds",
+      "tgt": "da",
+      "tier": "tier_1",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T3",
+      "src": "dzy",
+      "tgt": "fz",
+      "tier": "tier_1",
+      "shift_group": "imbalance",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T4",
+      "src": "fz",
+      "tgt": "dzy",
+      "tier": "tier_1",
+      "shift_group": "imbalance",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T5",
+      "src": "b2",
+      "tgt": "fz",
+      "tier": "tier_1",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T6",
+      "src": "ri",
+      "tgt": "wa1",
+      "tier": "tier_1",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.001
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T7",
+      "src": "ab",
+      "tgt": "wa1",
+      "tier": "tier_2",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T8",
+      "src": "da",
+      "tgt": "ds",
+      "tier": "tier_2",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T9",
+      "src": "ri",
+      "tgt": "ab",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.001
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T10",
+      "src": "ia",
+      "tgt": "da",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T11",
+      "src": "ia",
+      "tgt": "ds",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    },
+    {
+      "task": "T12",
+      "src": "b2",
+      "tgt": "dzy",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 15
+        }
+      }
+    }
+  ],
+  "methods": [
+    {
+      "method": "mmd",
+      "status": "available",
+      "entrypoint": "main/main_mmd.py",
+      "runtime_method": "mmd",
+      "comment": "Final-protocol MMD (train/mmd_trainer.py). alignment_weight 槽位 = MMD beta；per-task overrides 取自 legacy scripts/mmd.sh。Legacy v1 入口归档于 _archive/baselines_v1/。"
+    },
+    {
+      "method": "invgan_kd",
+      "status": "available",
+      "entrypoint": "main/main_invgan_kd.py",
+      "runtime_method": "invgan_kd",
+      "comment": "Final-protocol InvGAN+KD (train/invgan_kd_trainer.py). learning_rate = 适配 lr；alignment_weight 槽位 = KD beta；alpha=1、T=20、pre_epochs=5、num_epochs=20 固定（legacy scripts/invgan_kd.sh 口径）。Legacy v1 入口归档于 _archive/baselines_v1/。"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+Models/
+data/*/*.csv
+data/_cache/
+data/_shift/
+results*/
+!results_summary/
+logs/
+*.pt
+*.pth
+*.ckpt
+.env

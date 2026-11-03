@@ -1,0 +1,272 @@
+{
+  "experiment": "experiment_A",
+  "protocol": "deepjdot_faithful_original_joint_ot",
+  "defaults": {
+    "eval_protocol": "inductive",
+    "batch_size": 32,
+    "num_epochs": 20,
+    "ot_normalize": false,
+    "ot_reg": 0.1,
+    "ot_max_iter": 300,
+    "ot_tol": 1e-07,
+    "alignment_weight": 0.0,
+    "tau": 1.0,
+    "cost": "sq_l2",
+    "cost_mode": "class_blind",
+    "learning_rate": 1.5e-05,
+    "run_tag": "deepjdot_faithful_ep20_last_epoch",
+    "analysis_size": 128,
+    "analysis_seed": 42,
+    "deterministic": false,
+    "selection": "last_epoch",
+    "deepjdot_alpha": 0.001,
+    "deepjdot_lambda_t": 0.0001,
+    "deepjdot_solver": "emd"
+  },
+  "seeds": [
+    3000,
+    1000,
+    42,
+    10,
+    0
+  ],
+  "tier_seed_policy": {
+    "tier_1": [
+      3000,
+      1000,
+      42,
+      10,
+      0
+    ],
+    "tier_2": [
+      3000,
+      1000,
+      42,
+      10,
+      0
+    ]
+  },
+  "tier_method_policy": {
+    "tier_1": [
+      "deepjdot_faithful"
+    ],
+    "tier_2": [
+      "deepjdot_faithful"
+    ]
+  },
+  "tasks": [
+    {
+      "task": "T1",
+      "src": "wa1",
+      "tgt": "ab",
+      "tier": "tier_1",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T2",
+      "src": "ds",
+      "tgt": "da",
+      "tier": "tier_1",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T3",
+      "src": "dzy",
+      "tgt": "fz",
+      "tier": "tier_1",
+      "shift_group": "imbalance",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T4",
+      "src": "fz",
+      "tgt": "dzy",
+      "tier": "tier_1",
+      "shift_group": "imbalance",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T5",
+      "src": "b2",
+      "tgt": "fz",
+      "tier": "tier_1",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T6",
+      "src": "ri",
+      "tgt": "wa1",
+      "tier": "tier_1",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.001
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T7",
+      "src": "ab",
+      "tgt": "wa1",
+      "tier": "tier_2",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T8",
+      "src": "da",
+      "tgt": "ds",
+      "tier": "tier_2",
+      "shift_group": "semantic_small",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-05,
+          "alignment_weight": 1.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T9",
+      "src": "ri",
+      "tgt": "ab",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.001
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T10",
+      "src": "ia",
+      "tgt": "da",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.1
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T11",
+      "src": "ia",
+      "tgt": "ds",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    },
+    {
+      "task": "T12",
+      "src": "b2",
+      "tgt": "dzy",
+      "tier": "tier_2",
+      "shift_group": "semantic_cross",
+      "method_overrides": {
+        "mmd": {
+          "alignment_weight": 0.01
+        },
+        "invgan_kd": {
+          "learning_rate": 1e-06,
+          "alignment_weight": 5.0,
+          "num_epochs": 20
+        }
+      }
+    }
+  ],
+  "methods": [
+    {
+      "method": "deepjdot_faithful",
+      "status": "available",
+      "entrypoint": "main/main_ot.py",
+      "runtime_method": "deepjdot_faithful",
+      "comment": "Faithful DeepJDOT joint feature-label OT: squared feature cost, soft target CE, unregularized EMD, fixed-plan update. Shared ER encoder/matcher and evaluation protocol."
+    }
+  ]
+}
