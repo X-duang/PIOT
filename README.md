@@ -6,7 +6,7 @@
 
 - Dataset CSV files are fetched from the DADER upstream and checksum-verified; their terms are separate from the code license. See `data/README.md`.
 - The WDC driver and aggregation script were recovered from a separate project copy; they still require an end-to-end reproducibility check.
-- Exact server dependency versions and all experiment aggregation scripts still need verification. The repository has not yet passed an end-to-end training run in a clean environment.
+- The supplied server environment is recorded in `environment-server-record.yml`. Other experiment environments and some aggregation scripts still need verification; the repository has not yet passed an end-to-end training run in a clean environment.
 - Raw result logs, model checkpoints, caches, and paper source are not included. `results_summary/deepjdot_faithful.csv` summarizes the new DeepJDOT runs; it is not a replacement for the full run artifacts.
 - DADER-derived files retain their upstream license and attribution; see `THIRD_PARTY_NOTICES.md`.
 
@@ -16,7 +16,18 @@
 
 ## Dependencies
 
-The code imports Python, PyTorch, Transformers, NumPy, pandas, SciPy, scikit-learn and POT (`ot`). Use a CUDA-enabled PyTorch installation appropriate for the machine. The original experiment environment and exact versions must be recovered before a version-locked installation can be promised. Hugging Face model `bert-base-multilingual-cased` is downloaded by default or loaded from `Models/bert-base-multilingual-cased`.
+The supplied Linux server environment used Python 3.10.21, PyTorch 2.5.1, Transformers 4.57.6 and POT 0.9.7.post1. `environment-server-record.yml` preserves its exported packages and channels, with the machine-specific prefix removed. This is an environment record, not a guarantee of identical results across machines or of successful installation on non-Linux systems. The accompanying `requirements.txt` pins the core non-PyTorch packages recorded there.
+
+Create a Python 3.10 environment, install a PyTorch 2.5.1 build suitable for your NVIDIA driver, then run `python -m pip install -r requirements.txt`. For example, a compatible CUDA 12.4 setup can use:
+
+```bash
+conda create -n pivot python=3.10.21 pip
+conda activate pivot
+python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+python -m pip install -r requirements.txt
+```
+
+Installation and training in this fresh environment have not yet been verified. The encoder `bert-base-multilingual-cased` is downloaded by default or loaded from `Models/bert-base-multilingual-cased`.
 
 ## Data and launching
 
