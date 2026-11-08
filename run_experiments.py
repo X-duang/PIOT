@@ -157,7 +157,7 @@ def _resolved_config(manifest, task, method_spec, seed):
     if defaults["method"] in ("ablation_class_aware",):
         defaults["cost_mode"] = "class_aware"
     if defaults["method"] == "deepjdot_faithful":
-        # 原论文方法不使用 PIVOT 的外层权重或 Sinkhorn 正则；
+        # 原论文方法不使用 PIOT 的外层权重或 Sinkhorn 正则；
         # 联合代价内部使用 α 与 λ_t。
         defaults["cost"] = "sq_l2"
         defaults["cost_mode"] = "class_blind"

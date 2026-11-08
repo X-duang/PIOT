@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PIVOT-A: 12 directed WDC tasks x six priors x three seeds = 216 runs.
+# PIOT-A: 12 directed WDC tasks x six priors x three seeds = 216 runs.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=${PY:-python}

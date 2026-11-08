@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Re-run PIVOT-B/U/A on the twelve benchmark tasks with the relaxed OT solver
+# Re-run PIOT-B/U/A on the twelve benchmark tasks with the relaxed OT solver
 # (300 iterations / tol 1e-7, the WDC-grid setting), on four 3090s.
 #
 # 3 methods x 12 tasks x 5 seeds = 180 runs; four workers pinned to GPUs 0-3,

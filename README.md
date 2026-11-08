@@ -1,6 +1,6 @@
-# PIVOT: Prior-Shift-Informed Optimal Transport
+# PIOT: Prior-Informed Optimal Transport
 
-PIVOT adapts an entity matcher from labeled source pairs to unlabeled target pairs. The package contains PIVOT-B/U/A, source-only, MMD, InvGAN+KD (AdvDA), and the joint feature-label DeepJDOT implementation used in the manuscript.
+PIOT adapts an entity matcher from labeled source pairs to unlabeled target pairs. The package contains PIOT-B/U/A, source-only, MMD, InvGAN+KD (AdvDA), and the joint feature-label DeepJDOT implementation used in the manuscript.
 
 ## Status and limitations
 
@@ -21,8 +21,8 @@ The supplied Linux server environment used Python 3.10.21, PyTorch 2.5.1, Transf
 Create a Python 3.10 environment, install a PyTorch 2.5.1 build suitable for your NVIDIA driver, then run `python -m pip install -r requirements.txt`. For example, a compatible CUDA 12.4 setup can use:
 
 ```bash
-conda create -n pivot python=3.10.21 pip
-conda activate pivot
+conda create -n piot python=3.10.21 pip
+conda activate piot
 python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
 python -m pip install -r requirements.txt
 ```
@@ -33,6 +33,6 @@ The encoder `bert-base-multilingual-cased` is downloaded by default or loaded fr
 
 Run `python scripts/download_datasets.py` to fetch and verify the exact paper CSVs from the DADER upstream (after line-ending normalization).
 
-From the repository root, after preparing dependencies and data, launch the paper's PIVOT benchmark via `bash scripts/run_bench_ot300.sh` or run one task using `python run_experiments.py --manifest manifests/experiment_A_ot300.json --methods ot_balanced ot_unbalanced ot_auto --tasks T1 --results-root results_check`. The batch launcher uses four GPU IDs (override `GPUS`) and runs all five seeds. Other launchers cover 20-epoch and faithful DeepJDOT protocols. `bash scripts/run_wdc_prior_shift.sh` schedules the controlled WDC grid after its prerequisites are available. Review their GPU defaults and output paths before running.
+From the repository root, after preparing dependencies and data, launch the paper's PIOT benchmark via `bash scripts/run_bench_ot300.sh` or run one task using `python run_experiments.py --manifest manifests/experiment_A_ot300.json --methods ot_balanced ot_unbalanced ot_auto --tasks T1 --results-root results_check`. The batch launcher uses four GPU IDs (override `GPUS`) and runs all five seeds. Other launchers cover 20-epoch and faithful DeepJDOT protocols. `bash scripts/run_wdc_prior_shift.sh` schedules the controlled WDC grid after its prerequisites are available. Review their GPU defaults and output paths before running.
 
-The target pool is unlabeled for adaptation. Main-benchmark checkpoint selection and the optional PIVOT-A retry use target-validation labels; the 20-epoch last-checkpoint protocol disables those interventions. Dataset splits are stratified using labels for evaluation construction.
+The target pool is unlabeled for adaptation. Main-benchmark checkpoint selection and the optional PIOT-A retry use target-validation labels; the 20-epoch last-checkpoint protocol disables those interventions. Dataset splits are stratified using labels for evaluation construction.

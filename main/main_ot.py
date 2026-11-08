@@ -194,7 +194,7 @@ def main():
     if args.method == "ablation_squared":
         args.cost = "sq_l2"
     if args.method == "deepjdot_faithful":
-        # 原论文不使用 PIVOT 的外层 alignment_weight；联合代价内部
+        # 原论文不使用 PIOT 的外层 alignment_weight；联合代价内部
         # 已包含 α 与 λ_t。balanced 仅表示固定边际，不走 Sinkhorn 分支。
         args.alignment_weight = 0.0
         args.cost = "sq_l2"

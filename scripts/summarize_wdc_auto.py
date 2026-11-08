@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate 216 WDC PIVOT-A runs and extract F1 and pilot decisions."""
+"""Validate 216 WDC PIOT-A runs and extract F1 and pilot decisions."""
 import csv
 import json
 import sys
@@ -39,4 +39,4 @@ if errors:
 out = root / "wdc_auto_runs.csv"
 with out.open("w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=records[0].keys()); writer.writeheader(); writer.writerows(records)
-print(f"Verified 216 PIVOT-A runs; wrote {out}")
+print(f"Verified 216 PIOT-A runs; wrote {out}")

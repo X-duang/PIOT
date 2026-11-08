@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PIVOT-A probe-then-reinit 整批（协议候选：预热 5 轮照常供 probe 估计，
+# PIOT-A probe-then-reinit 整批（协议候选：预热 5 轮照常供 probe 估计，
 # probe 完成后将 encoder/classifier 重置为预训练初始化再联合训练；
 # probe 决策/投票/tau 与 ot300 主批同源，其余参数逐一致）。
 # 12 任务 x 5 seeds = 60 runs；8 卡串行分片（与 results_auto_w2 同布局，

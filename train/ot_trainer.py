@@ -405,7 +405,7 @@ def train(args, encoder, classifier, src_batches, tgt_pool_batches,
                 if alignment_stage:
                     loss = alignment_loss
                 elif args.method == "deepjdot_faithful":
-                    # 原论文固定 plan 后的联合损失；不再额外乘 PIVOT 的 λ。
+                    # 原论文固定 plan 后的联合损失；不再额外乘 PIOT 的 λ。
                     loss = match_loss + alignment_loss
                 else:
                     loss = match_loss + args.alignment_weight * alignment_loss

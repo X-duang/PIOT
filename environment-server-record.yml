@@ -1,4 +1,4 @@
-name: pivot-server-record
+name: piot-server-record
 channels:
 - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
 - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
