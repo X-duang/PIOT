@@ -201,7 +201,7 @@ def main():
         args.cost_mode = "class_blind"
         args.variant = "balanced"
         if args.lr is None:
-            # 原论文使用 Adam(lr=2e-4)；manifest 也会显式下发该值。
+            # Fallback when no learning rate is supplied; paper manifests may override it.
             args.lr = 2e-4
     elif args.method in ("ablation_balanced",):
         args.variant = "balanced"
